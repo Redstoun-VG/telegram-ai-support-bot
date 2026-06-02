@@ -1,53 +1,62 @@
-import sqlite3
+import os
+import psycopg2
 
-conn = sqlite3.connect(
-    "support.db"
-)
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+conn = psycopg2.connect(DATABASE_URL)
 
 cursor = conn.cursor()
 
 cursor.execute(
+"""
+CREATE TABLE IF NOT EXISTS support_requests (
+id SERIAL PRIMARY KEY,
+user_id BIGINT,
+username TEXT,
+question TEXT
+)
+"""
+)
+
+conn.commit()
+
+def save_request(
+user_id,
+username,
+question
+):
+
+
+    cursor.execute(
     """
-    CREATE TABLE IF NOT EXISTS support_requests (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        user_id INTEGER,
-        username TEXT,
-        question TEXT
+    INSERT INTO support_requests
+    (user_id, username, question)
+    VALUES (%s, %s, %s)
+    """,
+    (
+        user_id,
+        username,
+        question
     )
-    """
 )
 
 conn.commit()
 
 
-def save_request(
-    user_id,
-    username,
-    question
-):
-
-    cursor.execute(
-        """
-        INSERT INTO support_requests
-        (user_id, username, question)
-        VALUES (?, ?, ?)
-        """,
-        (
-            user_id,
-            username,
-            question
-        )
-    )
-
-    conn.commit()
-
-
 def get_requests():
 
+
     cursor.execute(
-        """
-        SELECT * FROM support_requests
-        """
-    )
+    """
+    SELECT * FROM support_requests
+    ORDER BY id DESC
+    """
+)
 
     return cursor.fetchall()
+
+

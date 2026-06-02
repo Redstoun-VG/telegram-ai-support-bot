@@ -75,22 +75,22 @@ docker run ai-support-bot
 
 ## Main Menu
 
-![Main Menu](images/welcome.png)
+![Main Menu](images/main-menu.png)
 
 ---
 
 ## Ask Question Flow
 
-(Add screenshot)
+![Ask Question](images/ask-question.png)
 
 ---
 
 ## Admin Panel
 
-(Add screenshot)
+![Admin Panel](images/admin-panel.png)
 
 ---
 
 ## Requests History
 
-(Add screenshot)
+![Requests History](images/requests-history.png)
