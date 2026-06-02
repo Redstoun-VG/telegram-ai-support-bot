@@ -1,4 +1,5 @@
 from email import message
+from aiogram import F
 
 from aiogram import Router
 from aiogram.filters import CommandStart
@@ -27,5 +28,37 @@ async def start(message: Message):
     reply_markup=main_keyboard
 )
     
+@router.message(F.text == "📚 FAQ")
+async def faq(message: Message):
+
+    await message.answer(
+        "📚 FAQ\n\n"
+        "❓ Как задать вопрос?\n"
+        "→ Нажмите '🤖 Задать вопрос'\n\n"
+        "❓ Когда отвечает поддержка?\n"
+        "→ Обычно в течение дня"
+    )
+
+
+@router.message(F.text == "📞 Поддержка")
+async def support_info(message: Message):
+
+    await message.answer(
+        "📞 Поддержка\n\n"
+        "Ответ оператора поступит "
+        "прямо в этом чате."
+    )  
+    
+
+@router.message(F.text == "ℹ️ О сервисе")
+async def about(message: Message):
+
+    await message.answer(
+        "ℹ️ AI Support Bot\n\n"
+        "Бот для обработки обращений "
+        "и поддержки пользователей.\n\n"
+        "Stack:\n"
+        "Python + Aiogram + PostgreSQL"
+    )    
     
 
